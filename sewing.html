@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<head>
+    <title>Расчет выкройки</title>
+    <link rel="stylesheet" href="sewing.css"/>
+    <script type="text/javascript" src="jquery-2.0.3.min.js"></script>
+    <script type="text/javascript">
+        window.onload = function () {
+
+            var form, workPlaces, linkViews, workPlaceViews;
+
+            form = (function () {
+                var arr = $('.inp').children().children('input'),
+                        o = {};
+                for (var i = 0; i < arr.length; i++) {
+                    currObj = $(arr[i]);
+                    o[currObj.attr('id').toLowerCase()] = currObj;
+                }
+                return o;
+            })();
+            workPlaces = $('.workplace').children();
+            linkViews = {
+                p:[form.posh, form.pog, form.pot, form.pob, form.shg, form.tsg, form.vg, form.dpt, form.vpkp, form.shs, form.dst, form.dst1, form.vpks, form.vb, form.shpl, form.op, form.dr, form.di],
+                b:[form.oz],
+                u:[form.op, form.oz]
+            };
+            workPlaceViews = {
+                p:[],
+                b:[],
+                u:[]
+            }
+
+            // Припуски
+            var PG = PSPR = 2.5,
+                    PT = PB = 1.5,
+                    PSHGS = PTSG = PVG = 1,
+                    POP = 3.5;
+
+            // Формулы для платья...
+            var dress = {
+                refreshParams:function () {
+                    // Размеры с неизменяемыми формулами
+                    this.params = {
+                        an:form.di.__myValue,
+                        at:form.dst.__myValue,
+                        tg:form.vb.__myValue - PSPR,
+                        tb:'17-20',
+                        g1g3:form.pog.__myValue / 2 - 3,
+                        pp1:form.dst1.__myValue - form.dst.__myValue
+                    };
+                    // Форлулы с припусками
+                    this.paramsWithAllowance = {
+                        gg1:form.pog.__myValue + PG,
+                        gg2:form.shs.__myValue + (PG / 4),
+                        ap:form.posh.__myValue / 3 + PSHGS
+                    };
+                    // Формулы без припусков
+                    this.paramsWithoutAllowance = {
+                        gg1:form.pog.__myValue,
+                        gg2:form.shs.__myValue,
+                        ap:form.posh.__myValue / 3
+                    };
+                    // Вытачки
+                    this.tuck = {
+                        waist:(form.pog.__myValue + PG) - (form.pot.__myValue + PT),
+                        get side(){return  this.waist/2},
+                        get back() {return this.side * 0.6},
+                        get front() {return this.side * 0.4},
+                        get t2t3() {return this.side / 2},
+                        get waistWidth() {return this.waist / 2}
+                    };
+                    // Полочка
+                    this.front = {
+                        t1a2:form.dpt.__myValue,
+                        a2a3:form.posh.__myValue / 3 + 1,
+                        get a2a4() {return this.a2a3 + 1},
+                        g1g4:form.tsg.__myValue + PTSG,
+                        a3g5:form.vg.__myValue + PVG,
+                        a3a5:5,
+                        oo1:6,
+                        get spl_a3a5() {return form.shpl.__myValue - this.a3a5},
+                        a1:3,
+                        a2:9
+                    }
+                }
+            }
+
+            /*
+             * Запуск расчета выкройки
+             */
+            function calcParams(obj) {
+                //Сбор данных
+                var w = $('.nav_link.active').attr('id'),
+                    currentView = linkViews[w];
+
+                w="p";
+
+                for (var i = 0; i < currentView.length; i++) {
+                    currentView[i].__myValue = currentView[i].val() * 1;
+                }
+
+                // Расчет
+                var o, o1, target = $('.workplace');
+                target.empty();
+
+                obj.refreshParams();
+
+                for (key in obj) {
+                    o = obj[key];
+                    if (typeof o === "object") {
+                        for (key1 in o) {
+                            target.append('<div class="formula ' + key1 + '">'+ key1 + ' = ' +o[key1]+'</div>');
+                        }
+                    }
+                }
+            }
+
+            $('#calc').click(function () {
+                calcParams(dress);
+                return false;
+            });
+
+            $('.nav_link').click(function () {
+                $(this).siblings().removeClass('active');
+                $(this).addClass('active');
+
+                // TODO продумать дизайн активной и не активной ссылки
+
+                $('.inp').children().addClass('inp_invisible');
+                var viewList = linkViews[$(this).attr('id')];
+                for (var i = 0; i < viewList.length; i++) {
+                    console.log(viewList[i]);
+                    viewList[i].parent().removeClass('inp_invisible');
+                }
+                return false;
+            });
+        }
+    </script>
+</head>
+<body>
+<div id="left">
+    <div class="inp">
+        <div class="inp_container">
+            <div class="inp_label">ПОШ</div>
+            <input type="text" id="POSH"/></div>
+        <div class="inp_container">
+            <div class="inp_label">ПОГ</div>
+            <input type="text" id="POG"/></div>
+        <div class="inp_container">
+            <div class="inp_label">ПОТ</div>
+            <input type="text" id="POT"/></div>
+        <div class="inp_container">
+            <div class="inp_label">ПОБ</div>
+            <input type="text" id="POB"/></div>
+        <div class="inp_container">
+            <div class="inp_label">ШГ</div>
+            <input type="text" id="SHG"/></div>
+        <div class="inp_container">
+            <div class="inp_label">ЦГ</div>
+            <input type="text" id="TSG"/></div>
+        <div class="inp_container">
+            <div class="inp_label">ВГ</div>
+            <input type="text" id="VG"/></div>
+        <div class="inp_container">
+            <div class="inp_label">ДПТ</div>
+            <input type="text" id="DPT"/></div>
+        <div class="inp_container">
+            <div class="inp_label">ВПКП</div>
+            <input type="text" id="VPKP"/></div>
+        <div class="inp_container">
+            <div class="inp_label">ШС</div>
+            <input type="text" id="SHS"/></div>
+        <div class="inp_container">
+            <div class="inp_label">ДСТ</div>
+            <input type="text" id="DST"/></div>
+        <div class="inp_container">
+            <div class="inp_label">ДСТ-1</div>
+            <input type="text" id="DST1"/></div>
+        <div class="inp_container">
+            <div class="inp_label">ВПКС</div>
+            <input type="text" id="VPKS"/></div>
+        <div class="inp_container">
+            <div class="inp_label">ШПЛ</div>
+            <input type="text" id="SHPL"/></div>
+        <div class="inp_container">
+            <div class="inp_label">ВБ</div>
+            <input type="text" id="VB"/></div>
+        <div class="inp_container">
+            <div class="inp_label">ОП</div>
+            <input type="text" id="OP"/></div>
+        <div class="inp_container">
+            <div class="inp_label">ОЗ</div>
+            <input type="text" id="OZ"/></div>
+        <div class="inp_container">
+            <div class="inp_label">ДР</div>
+            <input type="text" id="DR"/></div>
+        <div class="inp_container">
+            <div class="inp_label">ДИ</div>
+            <input type="text" id="DI"/></div>
+    </div>
+</div>
+<div id="right">
+    <div class="nav">
+        <a id="b" class="nav_link" href="">Брюки</a>
+        <a id="u" class="nav_link" href="">Юбка</a>
+        <a id="p" class="nav_link" href="">Платье </a>
+    </div>
+    <div class="workplace">
+        <!-- Сюда результат!!! -->
+    </div>
+    <div><a id="calc" href="">Рассчитать</a></div>
+</div>
+</body>
+</html>

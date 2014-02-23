@@ -1,0 +1,62 @@
+html {
+    height: 100%;
+}
+body {
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+#left {
+    height: 100%;
+    margin: 100px 0 0 20px;
+    padding: 5px;
+    width: 110px;
+    border-top: 1px solid black;
+}
+#right {
+    height: 100%;
+    margin: 100px 0 0;
+    padding: 2px;
+    width: 85%;
+    border-top: 1px solid black;
+    border-left: 1px solid black;
+}
+.inp {
+    width: 75px;
+}
+.inp input {
+    width: 40px;
+}
+.inp_container {
+    display: flex;
+    margin: 4px 6px;
+    width: 100px;
+}
+.inp_label {
+    width: 50px;
+}
+
+.inp_invisible {
+    display: none;
+}
+
+.nav {
+    margin-bottom: 5px;
+}
+
+.nav_link {
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+    margin: 5px 7px;
+    padding: 3px;
+}
+
+.workplace {
+    margin: 10px 7px 5px 10px;
+}
+
+#calc {
+    display: block;
+    margin-top: 10px;
+}
