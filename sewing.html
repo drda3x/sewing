@@ -42,38 +42,39 @@
                 refreshParams:function () {
                     // Размеры с неизменяемыми формулами
                     this.params = {
-                        an: 'АН = ' + form.di.__myValue,
-                        at: 'АТ = ' + form.dst.__myValue,
-                        tg: 'ТГ = ' + (form.vb.__myValue - PSPR), // todo может ли быть без припуска?
-                        tb: 'ТБ = 17-20',
-                        g1g3: 'Г1-Г3 = ' + (form.pog.__myValue / 2 - 3),
-                        pp1: 'П-П1 = ' + (form.dst1.__myValue - form.dst.__myValue),
-                        gg1: 'Г-Г1 = ' + form.pog.__myValue + ' ('+ (form.pog.__myValue + PG) +')',
-                        gg2: 'Г-Г2 = ' + form.shs.__myValue + ' ('+ (form.shs.__myValue + (PG / 4)) +')',
-                        ap: 'АП = ' + (form.posh.__myValue / 3) + ' ('+ (form.posh.__myValue / 3 + PSHGS) +')'
+                        an:'АН: '+form.di.__myValue,
+                        at:'АТ: '+form.dst.__myValue,
+                        tg:'ТГ: '+(form.vb.__myValue - PSPR),
+                        tb:'ТБ: 17-20',
+                        g1g3:'Г1-Г3: '+(form.pog.__myValue / 2 - 3).toFixed(1),
+                        pp1:'П-П1: '+(form.dst1.__myValue - form.dst.__myValue),
+                        gg1: 'Г-Г1: '+form.pog.__myValue+' ('+(form.pog.__myValue + PG)+')',
+                        gg2: 'Г-Г2: '+form.shs.__myValue+' ('+(form.shs.__myValue + (PG / 4)).toFixed(1)+')',
+                        ap: 'АП: '+form.posh.__myValue+' ('+(form.posh.__myValue / 3 + PSHGS).toFixed(1)+')'
                     };
                     // Вытачки
                     this.tuck = {
-                        waist: 'Вытачка по талии = ' + ((form.pog.__myValue + PG) - (form.pot.__myValue + PT)),
-                        get side(){return  'Еще какая-то вытачка = ' + (this.waist/2)},
-                        get back() {return 'Еще какая-то вытачка = ' + (this.side * 0.6)},
-                        get front() {return 'Еще какая-то вытачка = ' + (this.side * 0.4)},
-                        get t2t3() {return 'Еще какая-то вытачка = ' + (this.side / 2)},
-                        get waistWidth() {return 'Еще какая-то вытачка = ' + (this.waist / 2)}
+                        waist:'Вытачка 1: '+(form.pog.__myValue + PG - form.pot.__myValue + PT),
+                        side:'Еще вытачка: ' + ((form.pog.__myValue + PG - form.pot.__myValue + PT)/2).toFixed(1),
+                        back:'Еще вытачка: ' + ((form.pog.__myValue + PG - form.pot.__myValue + PT)/2 * 0.6).toFixed(1),
+                        front:'Еще вытачка: ' + ((form.pog.__myValue + PG - form.pot.__myValue + PT)/2 * 0.4).toFixed(1),
+                        t2t3:'Еще вытачка: ' + ((form.pog.__myValue + PG - form.pot.__myValue + PT)/2 / 2).toFixed(1),
+                        waistWidth:'Еще вытачка: ' + ((form.pog.__myValue + PG - form.pot.__myValue + PT)/2).toFixed(1)
                     };
                     // Полочка
                     this.front = {
-                        t1a2: 'T1-T2 = ' + form.dpt.__myValue,
-                        a2a3: 'А2-А3 = ' + form.posh.__myValue / 3 + 1,
-                        get a2a4() {return 'А2-А4 = ' + this.a2a3 + 1},
-                        g1g4: 'Г1-Г4 = ' + (form.tsg.__myValue + PTSG),
-                        a3g5: 'А3-Г5 = ' + (form.vg.__myValue + PVG),
-                        a3a5: 'А3-А5 = 5',
-                        oo1: 'O-O1 = 6',
-                        get spl_a3a5() {return 'ШПЛ-А3А5 = ' + (form.shpl.__myValue - this.a3a5)},
-                        a1: 'А1 = 3',
-                        a2: 'А2 = 9'
-                    }
+                        t1a2:'Т1-А2: '+form.dpt.__myValue,
+                        a2a3:'А2-А3: '+(form.posh.__myValue / 3 + 1).toFixed(1),
+                        a2a4:'А2-А4: '+(form.posh.__myValue / 3 + 2).toFixed(1),
+                        g1g4:'Г1-Г4: '+(form.tsg.__myValue + PTSG),
+                        a3g5:'А3-Г5: '+(form.vg.__myValue + PVG),
+                        a3a5:'А3-А5: 5',
+                        oo1:'О-О1: 6',
+                        spl_a3a5:'ШПЛ-А3А5: '+(form.shpl.__myValue - form.vg.__myValue + PVG),
+                        a1:'А1: 3',
+                        a2:'А2: 9'
+                    };
+                    this.aaa = {};
                 }
             }
 
@@ -83,7 +84,7 @@
             function calcParams(obj) {
                 //Сбор данных
                 var w = $('.nav_link.active').attr('id'),
-                    currentView = linkViews[w];
+                        currentView = linkViews[w];
 
                 w="p";
 
@@ -107,23 +108,30 @@
                 }
             }
 
+            // Функция для обновления экрана
+            function refreshView(o){
+                o.siblings().removeClass('active');
+                o.addClass('active');
+
+                // TODO продумать дизайн активной и не активной ссылки
+
+                $('.inp').children().addClass('inp_invisible');
+                var viewList = linkViews[o.attr('id')];
+                for (var i = 0; i < viewList.length; i++) {
+                    console.log(viewList[i]);
+                    viewList[i].parent().removeClass('inp_invisible');
+                }
+            }
+
+            refreshView($('.nav_link#p'));
+
             $('#calc').click(function () {
                 calcParams(dress);
                 return false;
             });
 
             $('.nav_link').click(function () {
-                $(this).siblings().removeClass('active');
-                $(this).addClass('active');
-
-                // TODO продумать дизайн активной и не активной ссылки
-
-                $('.inp').children().addClass('inp_invisible');
-                var viewList = linkViews[$(this).attr('id')];
-                for (var i = 0; i < viewList.length; i++) {
-                    console.log(viewList[i]);
-                    viewList[i].parent().removeClass('inp_invisible');
-                }
+                refreshView($(this));
                 return false;
             });
         }
