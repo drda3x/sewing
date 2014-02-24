@@ -42,46 +42,37 @@
                 refreshParams:function () {
                     // Размеры с неизменяемыми формулами
                     this.params = {
-                        an:form.di.__myValue,
-                        at:form.dst.__myValue,
-                        tg:form.vb.__myValue - PSPR,
-                        tb:'17-20',
-                        g1g3:form.pog.__myValue / 2 - 3,
-                        pp1:form.dst1.__myValue - form.dst.__myValue
-                    };
-                    // Форлулы с припусками
-                    this.paramsWithAllowance = {
-                        gg1:form.pog.__myValue + PG,
-                        gg2:form.shs.__myValue + (PG / 4),
-                        ap:form.posh.__myValue / 3 + PSHGS
-                    };
-                    // Формулы без припусков
-                    this.paramsWithoutAllowance = {
-                        gg1:form.pog.__myValue,
-                        gg2:form.shs.__myValue,
-                        ap:form.posh.__myValue / 3
+                        an: 'АН = ' + form.di.__myValue,
+                        at: 'АТ = ' + form.dst.__myValue,
+                        tg: 'ТГ = ' + (form.vb.__myValue - PSPR), // todo может ли быть без припуска?
+                        tb: 'ТБ = 17-20',
+                        g1g3: 'Г1-Г3 = ' + (form.pog.__myValue / 2 - 3),
+                        pp1: 'П-П1 = ' + (form.dst1.__myValue - form.dst.__myValue),
+                        gg1: 'Г-Г1 = ' + form.pog.__myValue + ' ('+ (form.pog.__myValue + PG) +')',
+                        gg2: 'Г-Г2 = ' + form.shs.__myValue + ' ('+ (form.shs.__myValue + (PG / 4)) +')',
+                        ap: 'АП = ' + (form.posh.__myValue / 3) + ' ('+ (form.posh.__myValue / 3 + PSHGS) +')'
                     };
                     // Вытачки
                     this.tuck = {
-                        waist:(form.pog.__myValue + PG) - (form.pot.__myValue + PT),
-                        get side(){return  this.waist/2},
-                        get back() {return this.side * 0.6},
-                        get front() {return this.side * 0.4},
-                        get t2t3() {return this.side / 2},
-                        get waistWidth() {return this.waist / 2}
+                        waist: 'Вытачка по талии = ' + ((form.pog.__myValue + PG) - (form.pot.__myValue + PT)),
+                        get side(){return  'Еще какая-то вытачка = ' + (this.waist/2)},
+                        get back() {return 'Еще какая-то вытачка = ' + (this.side * 0.6)},
+                        get front() {return 'Еще какая-то вытачка = ' + (this.side * 0.4)},
+                        get t2t3() {return 'Еще какая-то вытачка = ' + (this.side / 2)},
+                        get waistWidth() {return 'Еще какая-то вытачка = ' + (this.waist / 2)}
                     };
                     // Полочка
                     this.front = {
-                        t1a2:form.dpt.__myValue,
-                        a2a3:form.posh.__myValue / 3 + 1,
-                        get a2a4() {return this.a2a3 + 1},
-                        g1g4:form.tsg.__myValue + PTSG,
-                        a3g5:form.vg.__myValue + PVG,
-                        a3a5:5,
-                        oo1:6,
-                        get spl_a3a5() {return form.shpl.__myValue - this.a3a5},
-                        a1:3,
-                        a2:9
+                        t1a2: 'T1-T2 = ' + form.dpt.__myValue,
+                        a2a3: 'А2-А3 = ' + form.posh.__myValue / 3 + 1,
+                        get a2a4() {return 'А2-А4 = ' + this.a2a3 + 1},
+                        g1g4: 'Г1-Г4 = ' + (form.tsg.__myValue + PTSG),
+                        a3g5: 'А3-Г5 = ' + (form.vg.__myValue + PVG),
+                        a3a5: 'А3-А5 = 5',
+                        oo1: 'O-O1 = 6',
+                        get spl_a3a5() {return 'ШПЛ-А3А5 = ' + (form.shpl.__myValue - this.a3a5)},
+                        a1: 'А1 = 3',
+                        a2: 'А2 = 9'
                     }
                 }
             }
@@ -110,7 +101,7 @@
                     o = obj[key];
                     if (typeof o === "object") {
                         for (key1 in o) {
-                            target.append('<div class="formula ' + key1 + '">'+ key1 + ' = ' +o[key1]+'</div>');
+                            target.append('<div class="formula ' + key1 + '">'+o[key1]+'</div>');
                         }
                     }
                 }
