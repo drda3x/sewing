@@ -6,6 +6,18 @@ body {
     margin: 0;
     padding: 0;
 }
+a {
+    text-decoration: none;
+    color: #bbbbbb;
+}
+
+a:hover {
+    color: #000;
+}
+
+.active {
+    color: #000;
+}
 #left {
     height: 100%;
     margin: 100px 0 0 20px;
@@ -59,4 +71,5 @@ body {
 #calc {
     display: block;
     margin-top: 10px;
+    width: 80px;
 }
