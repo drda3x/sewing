@@ -11,7 +11,7 @@
             var form, workPlaces, linkViews, workPlaceViews;
 
             form = (function () {
-                var arr = $('.inp').find('input'),
+                var arr = $('.inp').children().children('input'),
                         o = {};
                 for (var i = 0; i < arr.length; i++) {
                     currObj = $(arr[i]);
@@ -141,11 +141,11 @@
 
                 // TODO продумать дизайн активной и не активной ссылки
 
-                $('.inp').find('.inp_container').addClass('inp_invisible');
+                $('.inp').children().addClass('inp_invisible');
                 var viewList = linkViews[o.attr('id')];
                 for (var i = 0; i < viewList.length; i++) {
-                    console.log(viewList[i].parentsUntil('tr'));
-                    viewList[i].parentsUntil('table').removeClass('inp_invisible');
+                    console.log(viewList[i]);
+                    viewList[i].parent().removeClass('inp_invisible');
                 }
             }
 
@@ -174,96 +174,76 @@
 </head>
 <body>
 <div id="left">
-    <table class="inp">
-        <tr class="inp_container">
-            <td class="inp_label">ПОШ</td>
-            <td><input type="text" id="POSH"/></td>
-        </tr>
-        <tr class="inp_container">
-            <td class="inp_label">ПОГ</td>
-            <td><input type="text" id="POG"/></td>
-        </tr>
-        <tr class="inp_container">
-            <td class="inp_label">ПОТ</td>
-            <td><input type="text" id="POT"/></td>
-        </tr>
-        <tr class="inp_container">
-            <td class="inp_label">ПОБ</td>
-            <td><input type="text" id="POB"/></td>
-        </tr>
-        <tr class="inp_container">
-            <td class="inp_label">ШГ</td>
-            <td><input type="text" id="SHG"/></td>
-        </tr>
-        <tr class="inp_container">
-            <td class="inp_label">ЦГ</td>
-            <td><input type="text" id="TSG"/></td>
-        </tr>
-        <tr class="inp_container">
-            <td class="inp_label">ВГ</td>
-            <td><input type="text" id="VG"/></td>
-        </tr>
-        <tr class="inp_container">
-            <td class="inp_label">ДПТ</td>
-            <td><input type="text" id="DPT"/></td>
-        </tr>
-        <tr class="inp_container">
-            <td class="inp_label">ВПКП</td>
-            <td><input type="text" id="VPKP"/></td>
-        </tr>
-        <tr class="inp_container">
-            <td class="inp_label">ШС</td>
-            <td><input type="text" id="SHS"/></td>
-        </tr>
-        <tr class="inp_container">
-            <td class="inp_label">ДСТ</td>
-            <td><input type="text" id="DST"/></td>
-        </tr>
-        <tr class="inp_container">
-            <td class="inp_label">ДСТ-1</td>
-            <td><input type="text" id="DST1"/></td>
-        </tr>
-        <tr class="inp_container">
-            <td class="inp_label">ВПКС</td>
-            <td><input type="text" id="VPKS"/></td>
-        </tr>
-        <tr class="inp_container">
-            <td class="inp_label">ШПЛ</td>
-            <td><input type="text" id="SHPL"/></td>
-        </tr>
-        <tr class="inp_container">
-            <td class="inp_label">ВБ</td>
-            <td><input type="text" id="VB"/></td>
-        </tr>
-        <tr class="inp_container">
-            <td class="inp_label">ОП</td>
-            <td><input type="text" id="OP"/></td>
-        </tr>
-        <tr class="inp_container">
-            <td class="inp_label">ОЗ</td>
-            <td><input type="text" id="OZ"/></td>
-        </tr>
-        <tr class="inp_container">
-            <td class="inp_label">ДР</td>
-            <td><input type="text" id="DR"/></td>
-        </tr>
-        <tr class="inp_container">
-            <td class="inp_label">ДИ</td>
-            <td><input type="text" id="DI"/></td>
-        </tr>
-    </table>
+    <div class="inp">
+        <div class="inp_container">
+            <div class="inp_label">ПОШ</div>
+            <input type="text" id="POSH"/></div>
+        <div class="inp_container">
+            <div class="inp_label">ПОГ</div>
+            <input type="text" id="POG"/></div>
+        <div class="inp_container">
+            <div class="inp_label">ПОТ</div>
+            <input type="text" id="POT"/></div>
+        <div class="inp_container">
+            <div class="inp_label">ПОБ</div>
+            <input type="text" id="POB"/></div>
+        <div class="inp_container">
+            <div class="inp_label">ШГ</div>
+            <input type="text" id="SHG"/></div>
+        <div class="inp_container">
+            <div class="inp_label">ЦГ</div>
+            <input type="text" id="TSG"/></div>
+        <div class="inp_container">
+            <div class="inp_label">ВГ</div>
+            <input type="text" id="VG"/></div>
+        <div class="inp_container">
+            <div class="inp_label">ДПТ</div>
+            <input type="text" id="DPT"/></div>
+        <div class="inp_container">
+            <div class="inp_label">ВПКП</div>
+            <input type="text" id="VPKP"/></div>
+        <div class="inp_container">
+            <div class="inp_label">ШС</div>
+            <input type="text" id="SHS"/></div>
+        <div class="inp_container">
+            <div class="inp_label">ДСТ</div>
+            <input type="text" id="DST"/></div>
+        <div class="inp_container">
+            <div class="inp_label">ДСТ-1</div>
+            <input type="text" id="DST1"/></div>
+        <div class="inp_container">
+            <div class="inp_label">ВПКС</div>
+            <input type="text" id="VPKS"/></div>
+        <div class="inp_container">
+            <div class="inp_label">ШПЛ</div>
+            <input type="text" id="SHPL"/></div>
+        <div class="inp_container">
+            <div class="inp_label">ВБ</div>
+            <input type="text" id="VB"/></div>
+        <div class="inp_container">
+            <div class="inp_label">ОП</div>
+            <input type="text" id="OP"/></div>
+        <div class="inp_container">
+            <div class="inp_label">ОЗ</div>
+            <input type="text" id="OZ"/></div>
+        <div class="inp_container">
+            <div class="inp_label">ДР</div>
+            <input type="text" id="DR"/></div>
+        <div class="inp_container">
+            <div class="inp_label">ДИ</div>
+            <input type="text" id="DI"/></div>
+    </div>
 </div>
 <div id="right">
-    <span class="nav">
+    <div class="nav">
         <a id="b" class="nav_link" href="">Брюки</a>
         <a id="u" class="nav_link" href="">Юбка</a>
         <a id="p" class="nav_link" href="">Платье </a>
-        <a id="calc" href="">Рассчитать</a>
-    </span>
+    </div>
     <div class="workplace">
         <!-- Сюда результат!!! -->
     </div>
-
+    <div><a id="calc" href="">Рассчитать</a></div>
 </div>
 </body>
 </html>
