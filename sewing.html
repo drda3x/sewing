@@ -22,8 +22,8 @@
             workPlaces = $('.workplace').children();
             linkViews = {
                 p:[form.posh, form.pog, form.pot, form.pob, form.shg, form.tsg, form.vg, form.dpt, form.vpkp, form.shs, form.dst, form.dst1, form.vpks, form.vb, form.shpl, form.op, form.dr, form.di],
-                b:[form.oz],
-                u:[form.op, form.oz]
+                b:[form.di, form.ob],
+                u:[form.pot, form.pob, form.di]
             };
             workPlaceViews = {
                 p:[],
@@ -52,14 +52,18 @@
                         gg2: 'Г-Г2: '+form.shs.__myValue+' ('+(form.shs.__myValue + (PG / 4)).toFixed(1)+')',
                         ap: 'АП: '+form.posh.__myValue+' ('+(form.posh.__myValue / 3 + PSHGS).toFixed(1)+')'
                     };
+
+                    var main_frm = form.pog.__myValue + PG - form.pot.__myValue + PT;
+
                     // Вытачки
                     this.tuck = {
-                        waist:'Вытачка 1: '+(form.pog.__myValue + PG - form.pot.__myValue + PT),
-                        side:'Еще вытачка: ' + ((form.pog.__myValue + PG - form.pot.__myValue + PT)/2).toFixed(1),
-                        back:'Еще вытачка: ' + ((form.pog.__myValue + PG - form.pot.__myValue + PT)/2 * 0.6).toFixed(1),
-                        front:'Еще вытачка: ' + ((form.pog.__myValue + PG - form.pot.__myValue + PT)/2 * 0.4).toFixed(1),
-                        t2t3:'Еще вытачка: ' + ((form.pog.__myValue + PG - form.pot.__myValue + PT)/2 / 2).toFixed(1),
-                        waistWidth:'Еще вытачка: ' + ((form.pog.__myValue + PG - form.pot.__myValue + PT)/2).toFixed(1)
+                        side:'Боковая вытачка: ' + (main_frm/2).toFixed(1),
+                        back:'Вытачка на спинке: ' + (main_frm/2 * 0.6).toFixed(1),
+                        front:'Вытачка на полочке: ' + (main_frm/2 * 0.4).toFixed(1),
+                        t2t3:'Ширина спинки по линии талии: ' + (main_frm/4).toFixed(1),
+                        b:'Точка "b": ' + (main_frm/6).toFixed(1),
+                        b2b3:'Б2-Б3: ' + ((form.pob.__myValue + PB - form.pog.__myValue + PG)/2).toFixed(1),
+                        n2n3:'N2-N3: ' + ((form.pob.__myValue + PB - form.pog.__myValue + PG)/2).toFixed(1)
                     };
                     // Полочка
                     this.front = {
@@ -75,6 +79,28 @@
                         a2:'А2: 9'
                     };
                     this.aaa = {};
+                }
+            }
+
+            skirt = {
+                refreshParams:function() {
+                    this.frontParams = {
+                        lb: 'Перед',
+                        tt1: 'Т-Т1: '+form.pob.__myValue/2,
+                        tb:'ТБ: 17-20',
+                        tt2: 'Т-Т2: '+ (form.pot.__myValue/2 + (form.pob.__myValue/2 - form.pot.__myValue/2)),
+                        t3: 'Т3: '+ (form.pot.__myValue/2 + (form.pob.__myValue/2 - form.pot.__myValue/2))/2,
+                        b3: 'Б3: 5'
+                    };
+                    this.backParams = {
+                        lb: 'Зад',
+                        tt1: 'Т-Т1: '+(form.pob.__myValue/2+1),
+                        nn1: 'N-N1: '+(form.pob.__myValue/2+1),
+                        tb:'ТБ: 17-20',
+                        tt2: 'Т-Т2: ' + (form.pot.__myValue/2 + (form.pob.__myValue/2 - form.pot.__myValue/2)),
+                        t3: 'Т3: '+ (form.pot.__myValue/2 + (form.pob.__myValue/2 - form.pot.__myValue/2))/2,
+                        t4: '8-10'
+                    }
                 }
             }
 
@@ -126,12 +152,21 @@
             refreshView($('.nav_link#p'));
 
             $('#calc').click(function () {
-                calcParams(dress);
+                var id = $('.nav_link.active').attr('id');
+                switch(id) {
+                    /*case 'b': calcParams(pants);
+                        break;*/
+                    case 'u': calcParams(skirt);
+                        break;
+                    case 'p': calcParams(dress);
+                        break;
+                }
                 return false;
             });
 
             $('.nav_link').click(function () {
                 refreshView($(this));
+                $('.workplace').empty();
                 return false;
             });
         }
