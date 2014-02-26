@@ -2,7 +2,7 @@ html {
     height: 100%;
 }
 body {
-    display: flex;
+    /*display: flex;*/
     margin: 0;
     padding: 0;
 }
@@ -21,9 +21,10 @@ a:hover {
 #left {
     height: 100%;
     margin: 100px 0 0 20px;
-    padding: 5px;
     width: 110px;
     border-top: 1px solid black;
+    border-right: 1px solid black;
+    float: left;
 }
 #right {
     height: 100%;
@@ -31,16 +32,17 @@ a:hover {
     padding: 2px;
     width: 85%;
     border-top: 1px solid black;
-    border-left: 1px solid black;
+    display: inline-block;
+
 }
 .inp {
     width: 75px;
+    display: inline;
 }
 .inp input {
     width: 40px;
 }
 .inp_container {
-    display: flex;
     margin: 4px 6px;
     width: 100px;
 }
@@ -69,7 +71,6 @@ a:hover {
 }
 
 #calc {
-    display: block;
     margin-top: 10px;
     width: 80px;
 }
